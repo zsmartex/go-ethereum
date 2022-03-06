@@ -289,7 +289,7 @@ func (s *Snapshot) apply(headers []*types.Header) (*Snapshot, error) {
 	return snap, nil
 }
 
-func (snap *Snapshot) GetNextSigner() (common.Address, error) {
+func (snap *Snapshot) GetNextSigner() common.Address {
 	var next_signer_index int
 	signers := snap.signers()
 	recent_signer := snap.Recent
@@ -301,17 +301,13 @@ func (snap *Snapshot) GetNextSigner() (common.Address, error) {
 		}
 	}
 
-	if recent_signer_index == -1 {
-		return common.Address{}, errRecentlySigerNotFound
-	}
-
-	if recent_signer_index == len(signers)-1 {
+	if recent_signer_index == -1 || recent_signer_index == len(signers)-1 {
 		next_signer_index = 0
 	} else {
 		next_signer_index = recent_signer_index + 1
 	}
 
-	return signers[next_signer_index], nil
+	return signers[next_signer_index]
 }
 
 // signers retrieves the list of authorized signers in ascending order.

@@ -605,10 +605,7 @@ func (c *Clique) Seal(chain consensus.ChainHeaderReader, block *types.Block, res
 		return errUnauthorizedSigner
 	}
 	// If we're amongst the recent signers, wait for the next block
-	next_signer, err := snap.GetNextSigner()
-	if err != nil {
-		return err
-	}
+	next_signer := snap.GetNextSigner()
 	if !bytes.Equal(signer.Bytes(), next_signer.Bytes()) {
 		return errors.New("signed recently, must wait for others")
 	}
