@@ -343,38 +343,6 @@ func TestClique(t *testing.T) {
 				{signer: "B"},
 			},
 			failure: errUnauthorizedSigner,
-		}, {
-			// An authorized signer that signed recenty should not be able to sign again
-			signers: []string{"A", "B"},
-			votes: []testerVote{
-				{signer: "A"},
-				{signer: "A"},
-			},
-			failure: errRecentlySigned,
-		}, {
-			// Recent signatures should not reset on checkpoint blocks imported in a batch
-			epoch:   3,
-			signers: []string{"A", "B", "C"},
-			votes: []testerVote{
-				{signer: "A"},
-				{signer: "B"},
-				{signer: "A", checkpoint: []string{"A", "B", "C"}},
-				{signer: "A"},
-			},
-			failure: errRecentlySigned,
-		}, {
-			// Recent signatures should not reset on checkpoint blocks imported in a new
-			// batch (https://github.com/ethereum/go-ethereum/issues/17593). Whilst this
-			// seems overly specific and weird, it was a Rinkeby consensus split.
-			epoch:   3,
-			signers: []string{"A", "B", "C"},
-			votes: []testerVote{
-				{signer: "A"},
-				{signer: "B"},
-				{signer: "A", checkpoint: []string{"A", "B", "C"}},
-				{signer: "A", newbatch: true},
-			},
-			failure: errRecentlySigned,
 		},
 	}
 	// Run through the scenarios and test them
