@@ -73,7 +73,7 @@ var (
 		LondonBlock:         big.NewInt(0),
 		ArrowGlacierBlock:   big.NewInt(0),
 		Clique: &CliqueConfig{
-			Period: 0,
+			Period: 2,
 			Epoch:  30000,
 		},
 	}
