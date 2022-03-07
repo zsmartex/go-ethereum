@@ -292,11 +292,10 @@ func (s *Snapshot) apply(headers []*types.Header) (*Snapshot, error) {
 func (snap *Snapshot) GetNextSigner() common.Address {
 	var next_signer_index int
 	signers := snap.signers()
-	recent_signer := snap.Recent
 	recent_signer_index := -1
 
 	for i, s := range signers {
-		if bytes.Equal(recent_signer.Bytes(), s.Bytes()) {
+		if bytes.Equal(snap.Recent.Bytes(), s.Bytes()) {
 			recent_signer_index = i
 		}
 	}
